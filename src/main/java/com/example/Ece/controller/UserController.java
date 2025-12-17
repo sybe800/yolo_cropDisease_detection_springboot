@@ -20,6 +20,7 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:8888")
 public class UserController {
     @Resource
     UserMapper userMapper;
@@ -113,4 +114,15 @@ public class UserController {
         userMapper.insert(user);
         return Result.success();
     }
+    @GetMapping("/current")
+    public Result<?> getCurrentUser(@RequestParam String username) {
+        // 复用原有查询逻辑，返回当前用户信息（包含id）
+        User user = userMapper.selectOne(Wrappers.<User>lambdaQuery()
+                .eq(User::getUsername, username));
+        if (user == null) {
+            return Result.error("-1", "用户不存在");
+        }
+        return Result.success(user);
+    }
 }
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.Ece.mapper.MessageMapper">
+
+    <!-- 关键：表名改为 chat_message -->
+    <select id="selectByUidOrderByCreateTimeAsc" resultType="com.example.Ece.entity.Message">
+        SELECT * FROM chat_message WHERE uid = #{uid} ORDER BY create_time ASC
+    </select>
+
+</mapper>

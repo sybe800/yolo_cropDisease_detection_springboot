@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.Ece.mapper.ConversationMapper">
+
+    <!-- 关键：表名改为 chat_session -->
+    <select id="selectByUserIdOrderByCreateTimeDesc" resultType="com.example.Ece.entity.Conversation">
+        SELECT * FROM chat_session WHERE user_id = #{userId} ORDER BY create_time DESC
+    </select>
+
+    <!-- 关键：表名改为 chat_session 和 chat_message -->
+    <select id="searchConversations" resultType="com.example.Ece.entity.Conversation">
+        SELECT DISTINCT c.* FROM chat_session c
+                                     LEFT JOIN chat_message m ON c.uid = m.uid
+        WHERE c.user_id = #{userId}
+          AND (c.title LIKE CONCAT('%', #{keyword}, '%') OR m.content LIKE CONCAT('%', #{keyword}, '%'))
+        ORDER BY c.create_time DESC
+    </select>
+
+</mapper>
